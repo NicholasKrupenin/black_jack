@@ -3,19 +3,20 @@ require_relative 'calculate'
 require_relative 'user'
 
 class Game
-
   attr_reader :name
 
   def initialize
-    @card, @calculate, @user, @dealer = Card.new, Calculate.new, User.new, Dealer.new
+    @card = Card.new
+    @calculate = Calculate.new
+    @user = User.new
+    @dealer = Dealer.new
     puts "\nWelcome to BlackJack"
-    print "What is your name? ~ > "
+    print 'What is your name? ~ > '
     @name = gets.chomp
     start
   end
 
   def start
-
     send(:no_money) if @user.have_money? || @dealer.have_money?
 
     puts "\n Ok lets go to the game: dealer deals cards"
@@ -48,7 +49,7 @@ class Game
 
   def dealt_card(number = 2)
     puts "\n Cards are dealt"
-    sleep (0.5)
+    sleep(0.5)
     @user.card_distribution(number, @card)
     @dealer.card_distribution(number, @card)
   end
@@ -58,7 +59,6 @@ class Game
     puts "> Dealer card: #{@dealer.card_view(@dealer.dealer_deck)} points: #{@calculate.summ(@dealer.dealer_deck)}"
     who_won
   end
-
 
   def view_hidden
     puts "\n> #{@name} card: #{@user.card_view(@user.deck)} points: #{@calculate.summ(@user.deck)}"
@@ -71,9 +71,7 @@ class Game
   end
 
   def skip
-    if @calculate.summ(@dealer.dealer_deck) < 17
-      @dealer.card_distribution(1, @card)
-    end
+    @dealer.card_distribution(1, @card) if @calculate.summ(@dealer.dealer_deck) < 17
     card_max?
     next_step
   end
@@ -98,7 +96,7 @@ class Game
   end
 
   def who_won
-    if @calculate.summ(@user.deck) <= 21 && @calculate.summ(@dealer.dealer_deck) <=21
+    if @calculate.summ(@user.deck) <= 21 && @calculate.summ(@dealer.dealer_deck) <= 21
       case @calculate.summ(@user.deck) <=> @calculate.summ(@dealer.dealer_deck)
       when -1 then puts "\n #{name}, you lose, Dealer win : #{@dealer.win}$"
       when 0
@@ -112,6 +110,10 @@ class Game
     else
       puts "\n #{name}, you lose, Dealer win : #{@dealer.win}$"
     end
+    end_game
+  end
+
+  def end_game
     print "\nWhat next? 1: rematch, Any symbol: exit = "
     selected = gets.to_i
     case selected

@@ -1,5 +1,4 @@
 class User
-
   attr_reader :deck, :deck_hidden, :dealer_deck
   attr_accessor :bank
 
@@ -11,13 +10,13 @@ class User
   end
 
   def card_distribution(number, obj)
-    (number).times { @deck << obj.card_take }
+    number.times { @deck << obj.card_take }
   end
 
   def card_view(arg)
-    s = ""
+    s = ''
     arg.each do |a, _b|
-     s << "(" + a.ljust(2) + _b.to_s + ")"
+      s << "(" + a.ljust(2) + _b.to_s + ")"
     end
     s
   end
@@ -33,14 +32,11 @@ class User
   def have_money?
     @bank <= 0
   end
-
 end
 
 class Dealer < User
-
   def card_distribution(number, obj)
-    (number).times { @dealer_deck << obj.card_take }
-    (number).times { @deck_hidden << "*" }
+    number.times { @dealer_deck << obj.card_take }
+    number.times { @deck_hidden << '*' }
   end
-
 end
