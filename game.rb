@@ -118,7 +118,6 @@ class Game
     selected = gets.to_i
     case selected
     when 1 then send(:start)
-    when 2 then send(:start)
     else
       exit
     end
