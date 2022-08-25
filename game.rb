@@ -101,8 +101,8 @@ class Game
       when -1 then puts "\n #{name}, you lose, Dealer win : #{@dealer.win}$"
       when 0
         puts "\n #{name}, it's draw"
-        @user.bank = 100
-        @dealer.bank = 100
+        @user.bank += 10
+        @dealer.bank += 10
       when 1 then puts "\n #{name}, you win #{@user.win}$"
       end
     elsif @calculate.summ(@user.deck) <= 21 && @calculate.summ(@dealer.dealer_deck) > 21
